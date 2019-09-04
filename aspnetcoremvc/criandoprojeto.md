@@ -121,7 +121,7 @@ Já para compilar e subir a aplicação há duas opções:
 git status
 
 #Log do github, vai mostrar a lista de commits
-git log 
+git log --online
 
 #criar repositório no github
 #Não marcar opção *commit inicial*, pois já existe (caso você tenha marcado a opção na hora da criação do projeto).
@@ -130,6 +130,8 @@ git remote add origin https://github.com/nome_usuario/nome_diretorio.git
 #Suba o código
 git push -u origin master
 #Informe suas credenciais para prosseguir
+
+#no futuro, basta adicionar as modificações e commitar
 
 git add .
 

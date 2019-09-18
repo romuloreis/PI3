@@ -80,5 +80,5 @@ Como por exemplo definir o número de casas decimais que você deseja mostrar ou
  - [Ambiente](aspnetcoremvc/ambiente.md)
  - [Criando Projeto](aspnetcoremvc/criandoprojeto.md)
  - [Criando Department](aspnetcoremvc/department.md)
- 
-  - [Tipos de notações (resumo)](https://github.com/romuloreis/P4I/blob/master/aspnetcoremvc/annotations.md)
+ - [Tipos de notações](Documento oficial)
+ - [Tipos de notações (resumo)](https://github.com/romuloreis/P4I/blob/master/aspnetcoremvc/annotations.md)

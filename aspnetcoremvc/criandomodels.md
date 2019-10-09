@@ -18,6 +18,7 @@ nesse caso serão as propriedades:
 ```cs
     public class Seller
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -49,6 +50,7 @@ namespace SuperApplication.Models
 {
     public class SalesRecord
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public double Amount { get; set; }
@@ -66,6 +68,7 @@ lembre-se de adicionar (using System.Collections.Generic;)
 ```cs
     public class Department
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Name { get; set; }
         
@@ -79,6 +82,7 @@ Na classe _Seller_ vamos adicionar propriedades:
 ```cs
     public class Seller
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -97,6 +101,7 @@ Na classe _SalesRecord_ adicionar propriedade:
 ```cs
     public class SalesRecord
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public double Amount { get; set; }
@@ -119,6 +124,7 @@ public Department(){}
 
 public Department(int id, string name)
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     Id = id;
     Name = name;
 }
@@ -129,6 +135,7 @@ public Seller() { }
 
 public Seller(int id, string name, string email, DateTime birthDate, double baseSalary)
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     Id = id;
     Name = name;
     Email = email;
@@ -142,6 +149,8 @@ public SalesRecord(){}
 
 public SalesRecord(int id, DateTime date, double amount, SaleStatus status)
 {
+
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     Id = id;
     Date = date;
     Amount = amount;

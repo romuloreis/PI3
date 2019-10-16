@@ -83,5 +83,6 @@ Como por exemplo definir o número de casas decimais que você deseja mostrar ou
  - [Criando Demais Modelos](aspnetcoremvc/criandomodels.md) 
  - [Seeding Service](seedingservice.md)
  - [Criando Controlador de Vendedores](aspnetcoremvc/controladores-seller.md)
+ - [View Models](aspnetcoremvc/viewmodels.md)
  - [Data Annotations - Code First - Documentação](https://docs.microsoft.com/pt-br/ef/ef6/modeling/code-first/data-annotations)
  - [Tipos de notações (resumo)](https://github.com/romuloreis/P4I/blob/master/aspnetcoremvc/annotations.md)

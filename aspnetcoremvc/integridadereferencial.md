@@ -18,9 +18,11 @@ afinal tipos int são números e não podem ser nulos.
 
 Crie um novo vendedor e note o ERRO, pois não é mais permitido eu criar um vendedor sem informar o departamento dele.
 Como não temos essa opção no formulário, vamos usar uma gambiarra temporária para testar...
-Sendo assim, vamos atualizar o método Insert() do nosso SellerService para que ele passe o primeiro departamento como padrão ao 
+Sendo assim, vamos atualizar o método **Insert()** do nosso _SellerService_ para que ele passe o primeiro departamento como padrão ao 
 registrar um novo vendedor, prevenindo que o erro ocorra.
 
+```cs
 obj.Department = _context.Department.First();
+```
 
 TESTAR!

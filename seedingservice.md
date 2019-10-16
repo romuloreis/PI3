@@ -1,4 +1,9 @@
-# Criando um Seeding Service
+# Criando um Seeding Service: Serviço para popular banco de dados
+
+Há várias formas de fazer a população inicial do banco de dados, 
+na nossa abordagem vamos deixar a migration apenas para criar a estrutura do banco e 
+vamos usar um serviço responsável apenas por popular nossas tabelas.
+
 
 **Preparação para o hands-on: Por precaução, para o servidor IIS**
 

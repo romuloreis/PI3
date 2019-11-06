@@ -155,11 +155,11 @@ public IActionResult Delete(int id){
 
 Hora de testar novamente!
 
-Pode ocorrer um erro, informando que o registro não pode ser deletado para não causar inconsistência no banco, send assim, vamos alterar na migration de criação do banco o modo em que a exclusão de chaves estrangeiras são tratadas.
+Pode ocorrer um erro, informando que o registro não pode ser deletado para não causar inconsistência no banco, send assim, vamos alterar na migration de criação do banco o modo em que a exclusão de chaves estrangeiras são tratadas, alterando de _Restricted_ para _Cascade_, no trecho **onDelete: ReferentialAction.Cascade);**
 
 ```cs
 
-migrationBuilder.CreateTable(
+              migrationBuilder.CreateTable(
                 name: "SalesRecord",
                 columns: table => new
                 {
@@ -182,4 +182,5 @@ migrationBuilder.CreateTable(
                     //romulo cascade
                 });
                 
-                ```
+                
+ ```

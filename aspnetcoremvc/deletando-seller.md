@@ -3,10 +3,11 @@
 ## Criando métodos necessários para deletar um vendedor 
 no serviço SellerService.
 
-Em _SerlerService_ vamos criar os métodos _FindById_ e _Remove_
+No serviço _SerlerService_ vamos criar os métodos _FindById()_ e _Remove()_
 
 ```cs
 public Seller FindById(int id){
+  //Retorna o vendedor com esse id
   return _context.Seller.FirstOrDefault(obj => obj.Id == id)
 }
 

@@ -87,5 +87,6 @@ Como por exemplo definir o número de casas decimais que você deseja mostrar ou
  - [Integridade Referencial](aspnetcoremvc/integridadereferencial.md)
  - [Criando Página ViewModel de Cadastro](aspnetcoremvc/creatingsellersviewmodel.md)
  - [View Models](aspnetcoremvc/viewmodels.md)
+ - [Deletando Vendedores](aspnetcoremvc/deletando-seller.md)
  - [Data Annotations - Code First - Documentação](https://docs.microsoft.com/pt-br/ef/ef6/modeling/code-first/data-annotations)
  - [Tipos de notações (resumo)](https://github.com/romuloreis/P4I/blob/master/aspnetcoremvc/annotations.md)

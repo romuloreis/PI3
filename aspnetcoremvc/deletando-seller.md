@@ -154,3 +154,32 @@ public IActionResult Delete(int id){
 ```
 
 Hora de testar novamente!
+
+Pode ocorrer um erro, informando que o registro não pode ser deletado para não causar inconsistência no banco, send assim, vamos alterar na migration de criação do banco o modo em que a exclusão de chaves estrangeiras são tratadas.
+
+```cs
+
+migrationBuilder.CreateTable(
+                name: "SalesRecord",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Amount = table.Column<double>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    SellerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesRecord", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesRecord_Seller_SellerId",
+                        column: x => x.SellerId,
+                        principalTable: "Seller",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    //romulo cascade
+                });
+                
+                ```

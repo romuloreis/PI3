@@ -168,6 +168,9 @@ public class BlogImage
 <details>
 <summary>Exemplo de código de relação muitos para muitos (n-n)</summary> 
  
+   - [Many-to-many artigo 1](https://www.codeproject.com/Articles/702890/MVC-Entity-Framework-and-Many-to-Many-Relation)
+   - [Many-to-many artigo 2](https://www.learnentityframeworkcore.com/configuration/many-to-many-relationship-configuration) 
+ 
 ```cs
 
  class MyContext : DbContext

@@ -38,5 +38,59 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Details".
 ```
 
 Agora vamos criar a view "Details" - View/Sellers/Details
+Crie a view sem template e apenas com a opção "Use a layout page" marcada
+
+```html
+
+@model Wallmart.Models.Seller
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>Seller Details</h4>
+    <hr />
+
+    <h2>@ViewData["Title"]</h2>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+    </dl>
+ </div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
+    <a asp-action="Index">Back to List</a>
+
+
+</div>
+
+
+```
+
+Note que nós não estamos mostrando o departamento do vendedor, afinal, o nome do departamento seria um dado de outro objeto.
 
 Incluir no método FindAll: Include(obj => obj.Department) (namespace: Microsoft.EntityFrameworkCore)

@@ -91,6 +91,19 @@ Crie a view sem template e apenas com a opção "Use a layout page" marcada
 
 ```
 
-Note que nós não estamos mostrando o departamento do vendedor, afinal, o nome do departamento seria um dado de outro objeto.
+Note que nós não estamos mostrando o nome do departamento do vendedor, vamos adicionar esse campo na view Details.
+
+```html
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd>
+
+```
+
+Não apareceu a informação ao rodar o sistema? Isso ocorre, pois o nome do departamento seria um dado de outro objeto.
 
 Incluir no método FindAll: Include(obj => obj.Department) (namespace: Microsoft.EntityFrameworkCore)

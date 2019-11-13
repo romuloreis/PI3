@@ -104,6 +104,19 @@ Note que nós não estamos mostrando o nome do departamento do vendedor, vamos a
 
 ```
 
-Não apareceu a informação ao rodar o sistema? Isso ocorre, pois o nome do departamento seria um dado de outro objeto.
+Não apareceu a informação ao rodar o sistema? Isso ocorre, pois o nome do departamento seria um dado de outro objeto e 
+nosso método de busca por ID (FindById) está retornando apenas o objeto Seller. 
 
-Incluir no método FindAll: Include(obj => obj.Department) (namespace: Microsoft.EntityFrameworkCore)
+Para resolver isso e carregar o departamento junto, devemos deixar isso explícito ao EntityFramework por meio de uma instrução que 
+indica que o EntityFramework deve fazer o join das tabelas.
+
+Então, no método FindById do SellerService, antes do _.FirstOrDefault_, vamos incluir o trecho "Include(obj => obj.Department)" 
+(*não esqueça de importar:* Microsoft.EntityFrameworkCore)
+
+```cs
+
+return _context.Seller.Include(obj => obj.Department).FirstOrDefault(obj => obj.Id == id);
+       
+```
+
+Você também pode incluir no método FindAll: Include(obj => obj.AnotherObject) 

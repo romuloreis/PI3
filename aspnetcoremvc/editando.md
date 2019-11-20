@@ -106,37 +106,87 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
 
 ```cs
 
-
-
-```
-
-
-
-
-# Serviço 
-
-No arquivo _Startup.cs_, vamos registrar esse serviço na injeção de dependência do sistema.
-Assim, minhas instâncias de classes poderão acessar esse serviço.
-Para isso basta adicionar o trecho de código abaixo ao final do método _ConfigureServices_:
-
-```cs
-services.AddScoped<SellerService>();
-```
-
-## Criando injeção de dependência com o Banco
-
-Em _SellerService_, vamos criar uma injeção de dependência com o contexto do banco, adicionando o seguinte trecho de código:
-
-```cs
-public class SellerService
-    {
-        private readonly SuperApplicationContext _context;
-
-        public SellerService(SuperApplicationContext context)
+public IActionResult Edit(int? id)
         {
-            _context = context;
+            /*Primeiro vou testar se o id está nulo*/
+            if (id == null)
+            {
+                /*Se estiver nulo, é pq foi efetuada uma requisição de forma indevida,
+                nesse caso, iremos retornar uma página de erro padrão.
+                Posteriormente vamos personalizar essa página de erro.*/
+                return NotFound();
+            }
+
+            /*Se o id não estiver nulo, vou buscar meu registro no banco.
+            Note que usamos id.value, pois se trata de uma variável que pode
+            ter um valor nulo (nulable)*/
+            var obj = _sellerService.FindById(id.Value);
+
+            /*Verificar se o id é válido e retornou algum registro.
+            Se nenhum vendedor for localizado com esse id, será retornado 
+            o valor null do método FindById(int id)*/
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            //Abre a tela de edição
+
+            List<Department> departments = _departmentService.FindAll();
+            SellerFormViewModel viewModel = new SellerFormViewModel{ Seller = obj, Departments = departments }
+
+            return View(viewModel);
         }
-    }
+
 ```
 
-## Implementando Método FindAll()
+## Criando a View Edit
+
+```html
+
+@model Wallmart.Models.ViewModels.SellerFormViewModel
+
+@{
+    ViewData["Title"] = "Updating Sellers";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+          <input type="hidden" asp-for="Seller.Id" />
+            <div class="form-group">
+                <label asp-for="Seller.Name" class="control-label"></label>
+                <input asp-for="Seller.Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Seller.Email" class="control-label"></label>
+                <input asp-for="Seller.Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Seller.BirthDate" class="control-label"></label>
+                <input asp-for="Seller.BirthDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Seller.Salary" class="control-label"></label>
+                <input asp-for="Seller.Salary" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Seller.DepartmentId" class="control-label"></label>
+                <select asp-for="Seller.DepartmentId" 
+                    asp-items="@(new SelectList(Model.Departments, "Id", "Name"))"
+                     class="form-control"></select>
+                <!--Lista de Objetos, Propriedade chave, Valor que vai aparecer na lista--> 
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+
+</div>
+```
+
+

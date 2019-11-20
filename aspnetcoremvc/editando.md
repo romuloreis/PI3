@@ -69,19 +69,49 @@ Em **ServiceSeller.cs**, vamos criar o método _update_ para atualizar os dados 
 ```
 
 
+Visto que pode ocorrer o erro "DbUpdateConcurrencyException" do EntityFramework por causa da concorrência do banco de dados ao executarmos a operação de update, vamos tentar capturar esse erro para poder relançar ele como uma exceção da camada de serviço.
+
+
+```cs
+
+public void Update(Seller obj) {
+            //Se não houver nenhum vendedor com esse ID no banco de dados
+            if (!_context.Seller.Any(s => s.Id == obj.Id)){
+                throw new NotFoundException("Id not found");
+            }
+            /*Porém, sempre que executarmos uma operação de update no banco de dados, 
+             * pode ocorrer um erro de concorrência "DbUpdateConcurrencyException"*/
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            /*Esse erro é do EntityFramework, ou seja, da camada de acesso aos dados*/
+            catch (DbUpdateConcurrencyException e) {
+                /*então vamos interceptar esse erro e tratá - lo na camada mais adequada, 
+                 * relançando a exceção na camada de serviços, não propagando o erro, assim, 
+                 o SellersController vai precisar tratar apenas exceções da camada de serviço*/
+                throw new DbConcurrencyException(e.Message);
+            }
+
+```
+
+
 # Ciando a tela de Editar do vendedor
 
-Vamos carregar [eager loading](https://docs.microsoft.com/en-us/ef/core/querying/related-data) para carregar objetos relacionados.
 
-Cada vendedor, listado pela view View/Sellers/Index, vai ter um link para a ação "Details", que ainda não existe, sendo assim...
+Cada vendedor, listado pela view View/Sellers/Index, vai ter um link para a ação "Edit", que ainda não existe, sendo assim...
 
-No contolador de vendedor SellersController, vamos criar a ação GET "Details".
+No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
 
 ```cs
 
 
 
 ```
+
+
+
 
 # Serviço 
 

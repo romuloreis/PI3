@@ -74,24 +74,25 @@ Visto que pode ocorrer o erro "DbUpdateConcurrencyException" do EntityFramework 
 
 ```cs
 
-public void Update(Seller obj) {
-            //Se não houver nenhum vendedor com esse ID no banco de dados
-            if (!_context.Seller.Any(s => s.Id == obj.Id)){
-                throw new NotFoundException("Id not found");
-            }
-            /*Porém, sempre que executarmos uma operação de update no banco de dados, 
-             * pode ocorrer um erro de concorrência "DbUpdateConcurrencyException"*/
-            try
-            {
-                _context.Update(obj);
-                _context.SaveChanges();
-            }
-            /*Esse erro é do EntityFramework, ou seja, da camada de acesso aos dados*/
-            catch (DbUpdateConcurrencyException e) {
-                /*então vamos interceptar esse erro e tratá - lo na camada mais adequada, 
-                 * relançando a exceção na camada de serviços, não propagando o erro, assim, 
-                 o SellersController vai precisar tratar apenas exceções da camada de serviço*/
-                throw new DbConcurrencyException(e.Message);
+          public void Update(Seller obj) {
+             //Se não houver nenhum vendedor com esse ID no banco de dados
+             if (!_context.Seller.Any(s => s.Id == obj.Id)){
+                 throw new NotFoundException("Id not found");
+             }
+             /*Porém, sempre que executarmos uma operação de update no banco de dados, 
+              * pode ocorrer um erro de concorrência "DbUpdateConcurrencyException"*/
+             try
+             {
+                 _context.Update(obj);
+                 _context.SaveChanges();
+             }
+             /*Esse erro é do EntityFramework, ou seja, da camada de acesso aos dados*/
+             catch (DbUpdateConcurrencyException e) {
+                 /*então vamos interceptar esse erro e tratá - lo na camada mais adequada, 
+                  * relançando a exceção na camada de serviços, não propagando o erro, assim, 
+                  o SellersController vai precisar tratar apenas exceções da camada de serviço*/
+                 throw new DbConcurrencyException(e.Message);
+             }
             }
 
 ```
@@ -106,7 +107,7 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
 
 ```cs
 
-public IActionResult Edit(int? id)
+     public IActionResult Edit(int? id)
         {
             /*Primeiro vou testar se o id está nulo*/
             if (id == null)

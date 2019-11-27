@@ -190,4 +190,27 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
 </div>
 ```
 
+Agora vamos criar a action _Edit_ com o método post no SellersController
 
+```html
+
+        [HttpPost]
+        public IActionResult Edit(int? id, SellerFormViewModel obj)
+        {
+            if (obj.Seller.Id != id) {
+                return BadRequest();
+            }
+            try
+            {
+                _sellerService.Update(obj.Seller);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException) {
+                return NotFound();
+            }
+            catch (DbConcurrencyException) {
+                return BadRequest();
+            }
+        }
+
+```

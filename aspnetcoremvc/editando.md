@@ -133,7 +133,7 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
             //Abre a tela de edição
 
             List<Department> departments = _departmentService.FindAll();
-            SellerFormViewModel viewModel = new SellerFormViewModel{ Seller = obj, Departments = departments }
+            SellerFormViewModel viewModel = new SellerFormViewModel{ Seller = obj, Departments = departments };
 
             return View(viewModel);
         }
@@ -192,7 +192,7 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
 
 Agora vamos criar a action _Edit_ com o método post no SellersController
 
-```html
+```cs
 
         [HttpPost]
         public IActionResult Edit(int? id, SellerFormViewModel obj)
@@ -214,3 +214,88 @@ Agora vamos criar a action _Edit_ com o método post no SellersController
         }
 
 ```
+
+## Página de erro personalizada
+
+Atualizar _ErrorViewModel.cs_ que está na pasta **Models**, acrescentando a propriedade _Message_ do tipo string, 
+afim de podermos incluir uma mensagem personalizada no erro.
+
+
+```cs
+    public class ErrorViewModel
+    {
+        public string RequestId { get; set; }
+
+        public string Message { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
+
+```
+
+Atualizar **Error.cshtml** para mostrar a mensagem de erro
+
+```html
+
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">@ViewData["Title"]</h1>
+<h2 class="text-danger">@Model.Message</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+```
+
+Em SellersController criar action "Error" com uma mensagem como parâmetro.
+
+```cs
+
+       public IActionResult Error(string message) {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
+
+```
+
+Agora vamos personalizar os retornos _NotFound()_ e _BadRequest()_ para chamadas da action _Error()_
+
+ > Use o atralho CTRL + F para te auxíliar 
+ 
+ 
+ ```cs
+ 
+ //Exemplo de retorno com redirecionamento para a action Error, passando como parâmetro um objeto anônimo com a propriedade message
+  return RedirectToAction(nameof(Error), new {message = "Id Not Provided" });
+ 
+ return RedirectToAction(nameof(Error), new {message = "Id Not Found" });
+ 
+  return RedirectToAction(nameof(Error), new {message = "Id missmatch" });
+ 
+           
+           // No try catch de atualizar vendedor, podemos passar como parâmetro a mensagem padrão da exceção
+             try
+            {
+                _sellerService.Update(obj.Seller);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (ApplicationException  e) {
+                return  RedirectToAction(nameof(Error), new { message = e.Message }); ;
+            }
+            //Note que o segundo catch pode ser eliminado devuivo ao ApplicationException 
+ 
+ 
+ ```
+
+Definir labels personalizadas, assim como semântica para Data [DataType] e definir o display format.

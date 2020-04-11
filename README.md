@@ -1,6 +1,25 @@
 # Projetos desenvolvidos na cadeira de Programação para Internet III
 
-# Tópicos
+# Material 
+ - [Ambiente](aspnetcoremvc/ambiente.md)
+ - [Criando Projeto](aspnetcoremvc/criandoprojeto.md)
+ - [Criando Department](aspnetcoremvc/department.md)
+ - [Criando Demais Modelos](aspnetcoremvc/criandomodels.md) 
+ - [Seeding Service](seedingservice.md)
+ - [Criando Controlador de Vendedores](aspnetcoremvc/controladores-seller.md)
+ - [Criando Página Simples de Cadastro](aspnetcoremvc/creatingsellers.md)
+ - [Integridade Referencial](aspnetcoremvc/integridadereferencial.md)
+ - [Criando Página ViewModel de Cadastro](aspnetcoremvc/creatingsellersviewmodel.md)
+ - [View Models](aspnetcoremvc/viewmodels.md)
+ - [Deletando Vendedores](aspnetcoremvc/deletando-seller.md)
+ - [Detalhes do Vendedor](aspnetcoremvc/detalhes.md)
+ - [Editando Vendedor](aspnetcoremvc/editando.md)
+ - [Data Annotations - Code First - Documentação](https://docs.microsoft.com/pt-br/ef/ef6/modeling/code-first/data-annotations)
+ - [Tipos de notações (resumo)](https://github.com/romuloreis/P4I/blob/master/aspnetcoremvc/annotations.md)
+ 
+ 
+ 
+ # Tópicos
 ## Definição de localidade (_Locale_) e Formatação de datas & números
 ### Globalização e localização (_Locale_) no ASP.NET Core
 Se você pretende suportar multiplas línguas na sua aplicação, você deve começar por esse [ARTIGO](https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/localization?view=aspnetcore-2.2). Aqui também entra questões culturais, como ordem pradrão das datas dd/mm/aaaa ou mm/dd/aaaa, marcador de casa decimal _,_ ou _._ e símbolo monetário da moeda vigente no país do usuário.
@@ -73,26 +92,6 @@ Como por exemplo definir o número de casas decimais que você deseja mostrar ou
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
  ```
-
-
-
-# Material 
- - [Ambiente](aspnetcoremvc/ambiente.md)
- - [Criando Projeto](aspnetcoremvc/criandoprojeto.md)
- - [Criando Department](aspnetcoremvc/department.md)
- - [Criando Demais Modelos](aspnetcoremvc/criandomodels.md) 
- - [Seeding Service](seedingservice.md)
- - [Criando Controlador de Vendedores](aspnetcoremvc/controladores-seller.md)
- - [Criando Página Simples de Cadastro](aspnetcoremvc/creatingsellers.md)
- - [Integridade Referencial](aspnetcoremvc/integridadereferencial.md)
- - [Criando Página ViewModel de Cadastro](aspnetcoremvc/creatingsellersviewmodel.md)
- - [View Models](aspnetcoremvc/viewmodels.md)
- - [Deletando Vendedores](aspnetcoremvc/deletando-seller.md)
- - [Detalhes do Vendedor](aspnetcoremvc/detalhes.md)
- - [Editando Vendedor](aspnetcoremvc/editando.md)
- - [Data Annotations - Code First - Documentação](https://docs.microsoft.com/pt-br/ef/ef6/modeling/code-first/data-annotations)
- - [Tipos de notações (resumo)](https://github.com/romuloreis/P4I/blob/master/aspnetcoremvc/annotations.md)
- 
  
  ## Relações (Apenas Model)
 

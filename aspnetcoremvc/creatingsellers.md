@@ -42,6 +42,7 @@ Vamos começar a criar o formulário, deixando de lado às tags de validação.
         informando qual é o nome/label do campo-->
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
+            </div>
         </form>
      </div>
 </div>

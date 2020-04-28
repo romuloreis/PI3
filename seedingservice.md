@@ -16,7 +16,7 @@ vamos usar um serviço responsável apenas por popular nossas tabelas.
  ```cs
  /*Não esquecer do using ProjectName.Data*/
  /*Essa linha faz a injeção de dependência no projeto.*/
- Services.AddScoped<SeedingService>();
+ services.AddScoped<SeedingService>();
  ```
 ## Implementação do serviço (SeedingService.cs).
   1. Primeiramente cria uma dependência com o DBContext, que deve estar em _/Data/PJNameContext.cs_

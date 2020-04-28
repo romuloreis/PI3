@@ -32,7 +32,7 @@ vamos usar um serviço responsável apenas por popular nossas tabelas.
    /* Ou seja, toda vez que uma instância de SeedingService for criada, 
    é criada uma instância do context também.*/
     
-    pubblic SeedingService( PJNameContext context){
+    public SeedingService( PJNameContext context){
       _context = context;
     }
   }

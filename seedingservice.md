@@ -38,9 +38,110 @@ vamos usar um serviço responsável apenas por popular nossas tabelas.
   }
  ```
 
-  4. Agora vamos criar o método responsável por popular a base de dados.
+  4. Agora vamos criar o método responsável por popular a base de dados. Aqui temos duas versões do código. A primeira versão é para aqueles que não criaram os construtores que tenham as relações entre as classes. A segunda versão é para aqueles que criaram construtores com as relações entre as classes 
+  
+```cs
+//Primeira Versão
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using SuperApplication.Data;
+using SuperApplication.Models;
+using SuperApplication.Models.Enums;
+
+namespace SuperApplication.Data
+{
+    public class SeedingService
+    {
+        private SuperApplicationContext _context;
+
+        public SeedingService(SuperApplicationContext context)
+        {
+            _context = context;
+        }
+
+        public void Seed()
+        {
+            //testar se já existe algum dado na minha base de dados
+            //Operação ANY do LINQ neste caso vai verificar se há algum registro nesta tabela.
+            if (_context.Department.Any() || _context.Seller.Any() || _context.SalesRecord.Any())
+            {
+                return; //Banco de dados já foi criado. Então cancela essa operação!
+            }
+
+            //Cria registros de departamentos
+            Department d1 = new Department("Computers");
+            Department d2 = new Department("Garden");
+            Department d3 = new Department("Office");
+            Department d4 = new Department("Bedroom");
+            Department d5 = new Department {Name = "Living" };
+
+            //Cria registros de vendedores
+                Seller s1 = new Seller("Tinky Winky", "tinkywinky@uaumart.com", new DateTime(1989, 5, 20), 1999.0);
+            Seller s2 = new Seller("Dipsy the Green", "dipsy@uaumart.com", new DateTime(1989, 10, 31), 3500.0);
+            Seller s3 = new Seller("Laa-Laa", "laalaa@uaumart.com", new DateTime(1988, 10, 31), 23350.0);
+            Seller s4 = new Seller("Xuxa Meneguel", "rainha@uaumart.com", new DateTime(1999, 1, 20), 3500.0);
+            Seller s5 = new Seller("Po the Red", "po@uaumart.com", new DateTime(2000, 3, 19), 4500.0);
+            Seller s6 = new Seller("Power Ranger Amarelo", "poweryellow@uaumart.com",
+            new DateTime(1977, 5, 24), 15900.0);
+
+            //Cria registros de vendas
+            SalesRecord r1 = new SalesRecord(new DateTime(2018, 09, 25), 11000.0, SaleStatus.Billed);
+            SalesRecord r2 = new SalesRecord(new DateTime(2018, 09, 4), 7000.0, SaleStatus.Billed);
+            SalesRecord r3 = new SalesRecord(new DateTime(2018, 09, 13), 4000.0, SaleStatus.Canceled);
+            SalesRecord r4 = new SalesRecord(new DateTime(2018, 09, 1), 8000.0, SaleStatus.Billed);
+            SalesRecord r5 = new SalesRecord(new DateTime(2018, 09, 21), 3000.0, SaleStatus.Billed);
+            SalesRecord r6 = new SalesRecord(new DateTime(2018, 09, 15), 2000.0, SaleStatus.Billed);
+            SalesRecord r7 = new SalesRecord(new DateTime(2018, 09, 28), 13000.0, SaleStatus.Billed);
+            SalesRecord r8 = new SalesRecord(new DateTime(2018, 09, 11), 4000.0, SaleStatus.Billed);
+            SalesRecord r9 = new SalesRecord(new DateTime(2018, 09, 14), 11000.0, SaleStatus.Pending);
+            SalesRecord r10 = new SalesRecord(new DateTime(2018, 09, 7), 9000.0, SaleStatus.Billed);
+            SalesRecord r11 = new SalesRecord(new DateTime(2018, 09, 13), 6000.0, SaleStatus.Billed);
+            SalesRecord r12 = new SalesRecord(new DateTime(2018, 09, 25), 7000.0, SaleStatus.Pending);
+            SalesRecord r13 = new SalesRecord(new DateTime(2018, 09, 29), 10000.0, SaleStatus.Billed);
+            SalesRecord r14 = new SalesRecord(new DateTime(2018, 09, 4), 3000.0, SaleStatus.Billed);
+            SalesRecord r15 = new SalesRecord(new DateTime(2018, 09, 12), 4000.0, SaleStatus.Billed);
+            SalesRecord r16 = new SalesRecord(new DateTime(2018, 10, 5), 2000.0, SaleStatus.Billed);
+            SalesRecord r17 = new SalesRecord(new DateTime(2018, 10, 1), 12000.0, SaleStatus.Billed);
+            SalesRecord r18 = new SalesRecord(new DateTime(2018, 10, 24), 6000.0, SaleStatus.Billed);
+            SalesRecord r19 = new SalesRecord(new DateTime(2018, 10, 22), 8000.0, SaleStatus.Billed);
+            SalesRecord r20 = new SalesRecord(new DateTime(2018, 10, 15), 8000.0, SaleStatus.Billed);
+            SalesRecord r21 = new SalesRecord(new DateTime(2018, 10, 17), 9000.0, SaleStatus.Billed);
+            SalesRecord r22 = new SalesRecord(new DateTime(2018, 10, 24), 4000.0, SaleStatus.Billed);
+            SalesRecord r23 = new SalesRecord(new DateTime(2018, 10, 19), 11000.0, SaleStatus.Canceled);
+            SalesRecord r24 = new SalesRecord(new DateTime(2018, 10, 12), 8000.0, SaleStatus.Billed);
+            SalesRecord r25 = new SalesRecord(new DateTime(2018, 10, 31), 7000.0, SaleStatus.Billed);
+            SalesRecord r26 = new SalesRecord(new DateTime(2018, 10, 6), 5000.0, SaleStatus.Billed);
+            SalesRecord r27 = new SalesRecord(new DateTime(2018, 10, 13), 9000.0, SaleStatus.Pending);
+            SalesRecord r28 = new SalesRecord(new DateTime(2018, 10, 7), 4000.0, SaleStatus.Billed);
+            SalesRecord r29 = new SalesRecord(new DateTime(2018, 10, 23), 12000.0, SaleStatus.Billed);
+            SalesRecord r30 = new SalesRecord(new DateTime(2018, 10, 12), 5000.0, SaleStatus.Billed);
+
+            /*Uma vez que nossos objetos estão criados, basta adicionar eles no banco de dados, usando o EntityFramework*/
+            //AddRange permite adicionar um conjunto de objetos. Em outras palavras, vários objetos.
+            _context.Department.AddRange(d1, d2, d3, d4);
+
+            _context.Seller.AddRange(s1, s2, s3, s4, s5, s6);
+
+            _context.SalesRecord.AddRange(
+                          r1, r2, r3, r4, r5, r6, r7, r8, r9, r10,
+                          r11, r12, r13, r14, r15, r16, r17, r18, r19, r20,
+                          r21, r22, r23, r24, r25, r26, r27, r28, r29, r30
+                      );
+            //Método que efetiva o registro/gravação no banco de dados
+            _context.SaveChanges();
+
+        }
+    }
+}
+
+
+```
+  
 
 ```cs
+//Segunda Versão
 Public void Seed(){
   //testar se já existe algum dado na minha base de dados
   //Operação ANY do LINQ neste caso vai verificar se há algum registro nesta tabela.
@@ -49,14 +150,14 @@ Public void Seed(){
   }
 
   //Cria registros de departamentos
-  Department d1 = new Department(1, “Computers”);
-  Department d2 = new Department(2, “Garden”);
-  Department d3 = new Department(3, “Office”);
-  Department d4 = new Department(4, “Bedroom”);
-  Department d5 = new Department {Id = 5, Name = “Living”};
+  Department d1 = new Department(1, "Computers");
+  Department d2 = new Department(2, "Garden");
+  Department d3 = new Department(3, "Office");
+  Department d4 = new Department(4, "Bedroom");
+  Department d5 = new Department {Id = 5, Name = "Living"};
 
   //Cria registros de vendedores
-  Seller s1 = new Seller(1, “Tinky Winky”, “tinkywinky@uaumart.com”, new DateTime(1989, 5, 20), 1999.0, d1);
+  Seller s1 = new Seller(1, "Tinky Winky", "tinkywinky@uaumart.com", new DateTime(1989, 5, 20), 1999.0, d1);
   Seller s2 = new Seller(2, "Dipsy the Green", "dipsy@uaumart.com", new DateTime(1989, 10, 31), 3500.0, d2);
   Seller s3 = new Seller(3, "Laa-Laa", "laalaa@uaumart.com", new DateTime(1988, 10, 31), 23350.0, d1);
   Seller s4 = new Seller(4, "Xuxa Meneguel", "rainha@uaumart.com", new DateTime(1999, 1, 20), 3500.0, d4);

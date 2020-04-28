@@ -62,16 +62,16 @@ Vamos replicar os campos do formulário
 ```html
 
 <div class="form-group">
-               <label asp-for="Seller.Email" class="control-label"></label>
-                <input asp-for="Seller.Email" class="form-control" />
+               <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Seller.BirthDate" class="control-label"></label>
-                <input asp-for="Seller.BirthDate" class="form-control" />
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Seller.BaseSalary" class="control-label"></label>
-                <input asp-for="Seller.BaseSalary" class="form-control" />
+                <label asp-for="BaseSalary" class="control-label"></label>
+                <input asp-for="BaseSalary" class="form-control" />
             </div>
             
 <!--Iremos incluir o campo departamento mais tarde→

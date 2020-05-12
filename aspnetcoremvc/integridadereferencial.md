@@ -25,4 +25,12 @@ registrar um novo vendedor, prevenindo que o erro ocorra.
 obj.Department = _context.Department.First();
 ```
 
+Comente a chamada de serviço no startup.cs, pois não estamos passando como parâmetro o Departamento 
+em que o funcionario está alocado, sendo que agora é obrigatório.
+
+```cs
+ //seedingService.Seed();
+ 
+```
+
 TESTAR!

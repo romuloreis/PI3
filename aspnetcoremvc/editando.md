@@ -249,9 +249,9 @@ ela ficava originalmente dentro da pasta **Models**, porém criamos uma pasta pa
     public class ErrorViewModel
     {
         public string RequestId { get; set; }
-
+         //Acrescentar essa propriedade
         public string Message { get; set; }
-
+        //propriedade que mostra se há erro ou não
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 
@@ -261,7 +261,7 @@ Atualizar **Error.cshtml** para mostrar a mensagem de erro
 
 ```html
 
-@model ErrorViewModel
+@model ProjectName.Models.ViewModels.ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
@@ -278,11 +278,15 @@ Atualizar **Error.cshtml** para mostrar a mensagem de erro
 
 ```
 
-Em SellersController criar action "Error" com uma mensagem como parâmetro.
+Em **SellersController** criar action "Error" com uma mensagem como parâmetro.
+Poderemos utilizar essa action sempre que precisamos redirecionar para uma 
+pagina de erro com mensagem personalizada.
 
 ```cs
 
        public IActionResult Error(string message) {
+       //Instânciando um objeto de ErrorViewModel
+       //O request Id da requisição vamos usar a "receita de bolo" abaixo
             var viewModel = new ErrorViewModel
             {
                 Message = message,
@@ -300,10 +304,12 @@ Agora vamos personalizar os retornos _NotFound()_ e _BadRequest()_ para chamadas
  
  ```cs
  
- //Exemplo de retorno com redirecionamento para a action Error, passando como parâmetro um objeto anônimo com a propriedade message
+ //Exemplo de retorno com redirecionamento para a action Error, 
+ //passando como parâmetro um objeto anônimo com a propriedade message
+  
   return RedirectToAction(nameof(Error), new {message = "Id Not Provided" });
  
- return RedirectToAction(nameof(Error), new {message = "Id Not Found" });
+  return RedirectToAction(nameof(Error), new {message = "Id Not Found" });
  
   return RedirectToAction(nameof(Error), new {message = "Id missmatch" });
  
@@ -317,7 +323,7 @@ Agora vamos personalizar os retornos _NotFound()_ e _BadRequest()_ para chamadas
             catch (ApplicationException  e) {
                 return  RedirectToAction(nameof(Error), new { message = e.Message }); ;
             }
-            //Note que o segundo catch pode ser eliminado devuivo ao ApplicationException 
+            //Note que o segundo catch pode ser eliminado devido ao ApplicationException 
  
  
  ```

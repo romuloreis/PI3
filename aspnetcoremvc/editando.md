@@ -4,6 +4,10 @@
 
 No mundo real, vamos desejar ter erros específicos da nossa camada de serviço e não da aplicação.
 Além disso, posso tratar as exeções de maneira especifíca para o contexto do projeto, conforme as regras de negócio.
+
+Vamos criar exceções específicas para a camada de serviço! 
+Assim, poderemos tratar essas exceções, sem passar informações sensíveis, como do banco de dados, por exemplo.
+
 Primeiramente vamos criar a pasta **Exceptions** dentro da pasta **Services**.
  > Botão direito em cima da pasta Services -> add new folder -> Exceptions
  
@@ -55,6 +59,7 @@ Em **ServiceSeller.cs**, vamos criar o método _update_ para atualizar os dados 
 
         public void Update(Seller obj) {
             //Se não houver nenhum vendedor com esse ID no banco de dados
+            //o "Any" retorna se há pelo menos um registro que se encaixa na condição. Retorno booleano
             if (!_context.Seller.Any(s => s.Id == obj.Id)){
                 throw new NotFoundException("Id not found");
             }
@@ -73,6 +78,8 @@ Visto que pode ocorrer o erro "DbUpdateConcurrencyException" do EntityFramework 
 
 
 ```cs
+
+        /*Caso ocorra a exceção de erro de concorrência do banco relacional o EntityFramework vai gerar a exceção DBConcurrencyException*/
 
           public void Update(Seller obj) {
              //Se não houver nenhum vendedor com esse ID no banco de dados
@@ -100,10 +107,11 @@ Visto que pode ocorrer o erro "DbUpdateConcurrencyException" do EntityFramework 
 
 # Ciando a tela de Editar do vendedor
 
+Cada vendedor, listado pela view View/Sellers/Index, vai ter um link para a ação "Edit", 
+que ainda não existe, sendo assim...
 
-Cada vendedor, listado pela view View/Sellers/Index, vai ter um link para a ação "Edit", que ainda não existe, sendo assim...
-
-No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
+No contolador de vendedor SellersController, vamos criar a ação "Edit" com método GET, o qual 
+vai ser responsável por carregar a página com o formúlario com os dados do vendedor para atualiazação.
 
 ```cs
 
@@ -130,7 +138,8 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
             {
                 return NotFound();
             }
-            //Abre a tela de edição
+            //Vamos criar uma lista com os departamentos e com o vendedor com o id 
+            passado por parâmetro para popular a view de edição
 
             List<Department> departments = _departmentService.FindAll();
             SellerFormViewModel viewModel = new SellerFormViewModel{ Seller = obj, Departments = departments };
@@ -141,6 +150,17 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
 ```
 
 ## Criando a View Edit
+
+Aqui é importante lembrar que o formulário deve conter o id do vendedor que estamos efetuando a edição, 
+porém esse campo possivelmente seja sensível e não queremos que ele tenha a opção de ser alterado, sendo assim,
+vamos atribuir ao campo ID do formulário a propriedade _hidden_.
+
+Desenvolvendo da forma que estamos, recomendo usar o código da view Create de Seller como base, 
+pois bastaria modificar o título da página e os atributos do botão de envio do formulário.
+Entretanto, também podemos criar a view vazia ou com base no template "edit", mas não esqueça de que modificações terão 
+que ser feitas caso você escolha utilizar o template.
+
+Ao criar essa view, deixe marcado apenas a opção de "use a layout page"
 
 ```html
 
@@ -182,7 +202,7 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -190,18 +210,20 @@ No contolador de vendedor SellersController, vamos criar a ação GET "Edit".
 </div>
 ```
 
-Agora vamos criar a action _Edit_ com o método post no SellersController
+Agora vamos criar a action _Edit_ com o método POST no SellersController
 
 ```cs
 
         [HttpPost]
         public IActionResult Edit(int? id, SellerFormViewModel obj)
         {
+        /*Verificar se realmente é sellerformviewmodel e n seller*/
             if (obj.Seller.Id != id) {
                 return BadRequest();
             }
             try
             {
+             //Essa chamada de update pode gerar duas exceções, sempre lembre das importações 
                 _sellerService.Update(obj.Seller);
                 return RedirectToAction(nameof(Index));
             }
@@ -217,8 +239,10 @@ Agora vamos criar a action _Edit_ com o método post no SellersController
 
 ## Página de erro personalizada
 
-Atualizar _ErrorViewModel.cs_ que está na pasta **Models**, acrescentando a propriedade _Message_ do tipo string, 
-afim de podermos incluir uma mensagem personalizada no erro.
+Atualizar _ErrorViewModel.cs_ que está na pasta **Models/ViewModels**, acrescentando a 
+propriedade _Message_ do tipo string, afim de podermos incluir uma mensagem personalizada no erro.
+Note que essa classe ela foi gerada automaticamente quando criamos o projeto e que 
+ela ficava originalmente dentro da pasta **Models**, porém criamos uma pasta para colocar nossas ViewModels.
 
 
 ```cs

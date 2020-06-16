@@ -16,6 +16,7 @@
  - [Editando Vendedor](aspnetcoremvc/editando.md)
  - [Data Annotations - Code First - Documentação](https://docs.microsoft.com/pt-br/ef/ef6/modeling/code-first/data-annotations)
  - [Tipos de notações (resumo)](https://github.com/romuloreis/P4I/blob/master/aspnetcoremvc/annotations.md)
+ - [LINQ](aspnetcoremvc/linq.md)
  
  
  

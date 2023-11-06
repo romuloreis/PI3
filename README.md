@@ -92,6 +92,9 @@ Como por exemplo definir o número de casas decimais que você deseja mostrar ou
          * a qual é a formatação que define que serão exibidas duas casas decimais*/
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
+
+        /*Trabalhando com números decimais*/
+        [DisplayFormat(DataFormatString = "{0:#,##0.00}")]
  ```
  
  ## Relações (Apenas Model)
